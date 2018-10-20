@@ -120,7 +120,7 @@ struct Material
 class Mesh
 {
 	public:
-		Mesh(Vertex vertices[], unsigned long vlength, unsigned int indices[], unsigned long ilength);
+		Mesh(Vertex vertices[], size_t vlength, unsigned int indices[], size_t ilength);
 		~Mesh();
 		
 		void bind() const;
@@ -129,12 +129,12 @@ class Mesh
 		unsigned int getVBO() const;
 		unsigned int getEBO() const;
 		
-		unsigned long getVertexLength() const;
-		unsigned long getIndexLength() const;
+		size_t getVertexLength() const;
+		size_t getIndexLength() const;
 	
 	private:
 		unsigned int VAO, VBO, EBO;
-		unsigned long vlength, ilength;
+		size_t vlength, ilength;
 		
 		Mesh(const Mesh&);
 		Mesh& operator=(const Mesh&);
@@ -219,7 +219,7 @@ struct SpotLight
 class DefaultShader : public Shader
 {
 	public:
-		DefaultShader(unsigned long maxPointLights = 8, unsigned long maxSpotLights = 8);
+		DefaultShader(size_t maxPointLights = 8, size_t maxSpotLights = 8);
 		~DefaultShader();
 		
 		void render(const MatMesh& mesh);
@@ -228,17 +228,17 @@ class DefaultShader : public Shader
 		void setUniformCamera(Camera& camera);
 		void setUniformMaterial(const Material& material);
 		void setUniformDirectionalLight(const DirectionalLight& light);
-		void setUniformPointLight(unsigned long i, const PointLight& light);
-		void setUniformSpotLight(unsigned long i, const SpotLight& light);
+		void setUniformPointLight(size_t i, const PointLight& light);
+		void setUniformSpotLight(size_t i, const SpotLight& light);
 		void setUniformDirectionalLightEnable(bool en);
-		void setUniformPointLightEnable(unsigned long i, bool en);
-		void setUniformSpotLightEnable(unsigned long i, bool en);
+		void setUniformPointLightEnable(size_t i, bool en);
+		void setUniformSpotLightEnable(size_t i, bool en);
 		
-		unsigned long getMaxPointLights() const;
-		unsigned long getMaxSpotLights() const;
+		size_t getMaxPointLights() const;
+		size_t getMaxSpotLights() const;
 	
 	private:
-		unsigned long maxPointLights, maxSpotLights;
+		size_t maxPointLights, maxSpotLights;
 		
 		int camPosLoc, camMatLoc, norMatLoc, traMatLoc;
 		

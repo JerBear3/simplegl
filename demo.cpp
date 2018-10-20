@@ -6,8 +6,6 @@
 #include "math.hpp"
 #include "gl.hpp"
 
-#define LENGTH(array) sizeof(array) / sizeof(array[0])
-
 #define WIN_WIDTH 1280
 #define WIN_HEIGHT 720
 #define CAM_NEAR 0.1f

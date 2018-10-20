@@ -221,7 +221,7 @@ string scati(const string& str, int i)
 	return ret.str();
 }
 
-DefaultShader::DefaultShader(unsigned long maxPointLights, unsigned long maxSpotLights)
+DefaultShader::DefaultShader(size_t maxPointLights, size_t maxSpotLights)
 		: Shader(__dsc_vertexShaderSource, (scati(__dsc_fragmentShaderSourceA, maxPointLights) +
 		scati(__dsc_fragmentShaderSourceB, maxSpotLights) + __dsc_fragmentShaderSourceC).c_str())
 {
@@ -254,7 +254,7 @@ DefaultShader::DefaultShader(unsigned long maxPointLights, unsigned long maxSpot
 	lightSpotInnerLoc = new int[maxSpotLights];
 	lightSpotOuterLoc = new int[maxSpotLights];
 	
-	unsigned long i;
+	size_t i;
 	
 	lightDirEnLoc =   getUniform("dirLight.en");
 	lightDirDirLoc =  getUniform("dirLight.dir");
@@ -381,7 +381,7 @@ void DefaultShader::setUniformDirectionalLight(const DirectionalLight& light)
 	setUniform3f(lightDirSpecLoc, light.specular);
 }
 
-void DefaultShader::setUniformPointLight(unsigned long i, const PointLight& light)
+void DefaultShader::setUniformPointLight(size_t i, const PointLight& light)
 {
 	setUniform3f(lightPointPosLoc[i],      light.position);
 	setUniform3f(lightPointAmbLoc[i],      light.ambient);
@@ -392,7 +392,7 @@ void DefaultShader::setUniformPointLight(unsigned long i, const PointLight& ligh
 	setUniform1f(lightPointAttQuadLoc[i],  light.attenuationQuadratic);
 }
 
-void DefaultShader::setUniformSpotLight(unsigned long i, const SpotLight& light)
+void DefaultShader::setUniformSpotLight(size_t i, const SpotLight& light)
 {
 	setUniform3f(lightSpotPosLoc[i],      light.position);
 	setUniform3f(lightSpotDirLoc[i],      light.direction);
@@ -411,22 +411,22 @@ void DefaultShader::setUniformDirectionalLightEnable(bool en)
 	setUniform1b(lightDirEnLoc, en);
 }
 
-void DefaultShader::setUniformPointLightEnable(unsigned long i, bool en)
+void DefaultShader::setUniformPointLightEnable(size_t i, bool en)
 {
 	setUniform1b(lightPointEnLoc[i], en);
 }
 
-void DefaultShader::setUniformSpotLightEnable(unsigned long i, bool en)
+void DefaultShader::setUniformSpotLightEnable(size_t i, bool en)
 {
 	setUniform1b(lightSpotEnLoc[i], en);
 }
 
-unsigned long DefaultShader::getMaxPointLights() const
+size_t DefaultShader::getMaxPointLights() const
 {
 	return maxPointLights;
 }
 
-unsigned long DefaultShader::getMaxSpotLights() const
+size_t DefaultShader::getMaxSpotLights() const
 {
 	return maxSpotLights;
 }

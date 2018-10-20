@@ -1,34 +1,18 @@
 #include "../lib/glad.h" //glad needs to be included before glfw
 #include "../gl.hpp"
 
-Mesh::Mesh(Vertex vertices[], unsigned long vlength, unsigned int indices[], unsigned long ilength)
+Mesh::Mesh(Vertex vertices[], size_t vlength, unsigned int indices[], size_t ilength)
 {
-	glGenVertexArrays(1, &VAO); //vertex attributes
+	glGenVertexArrays(1, &VAO); //vertex attribute layout
 	glGenBuffers(1, &VBO); //vertices
 	glGenBuffers(1, &EBO); //indices of vertices
 	
-	unsigned long vertexSize = sizeof(Vertex); //32
-	unsigned long vertexAttCnt = sizeof(Vertex) / sizeof(float); //8
-	
-	float* vertexData = new float[vertexAttCnt * vlength];
-	for(unsigned long i = 0; i < vlength; i++)
-	{
-		unsigned long vi = i * vertexAttCnt;
-		vertexData[vi    ] = vertices[i].position.x;
-		vertexData[vi + 1] = vertices[i].position.y;
-		vertexData[vi + 2] = vertices[i].position.z;
-		vertexData[vi + 3] = vertices[i].normal.x;
-		vertexData[vi + 4] = vertices[i].normal.y;
-		vertexData[vi + 5] = vertices[i].normal.z;
-		vertexData[vi + 6] = vertices[i].u;
-		vertexData[vi + 7] = vertices[i].v;
-	}
+	size_t vertexSize = sizeof(Vertex); //32
 	
 	glBindVertexArray(VAO);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertexSize * vlength, vertexData, GL_STATIC_DRAW);
-	delete[] vertexData;
+	glBufferData(GL_ARRAY_BUFFER, vertexSize * vlength, vertices, GL_STATIC_DRAW);
 	this->vlength = vlength;
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -71,12 +55,12 @@ unsigned int Mesh::getEBO() const
 	return EBO;
 }
 
-unsigned long Mesh::getVertexLength() const
+size_t Mesh::getVertexLength() const
 {
 	return vlength;
 }
 
-unsigned long Mesh::getIndexLength() const
+size_t Mesh::getIndexLength() const
 {
 	return ilength;
 }
