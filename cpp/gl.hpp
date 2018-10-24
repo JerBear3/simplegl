@@ -52,8 +52,8 @@ class Camera
 		
 		float getFPSYaw() const;
 		float getFPSPitch() const;
-		void setFPSPitch(float pitch);
 		void setFPSYaw(float yaw);
+		void setFPSPitch(float pitch);
 		void setFPSLookAt(Vector3 at);
 		
 		void calculateFPSView(GLFWwindow* window);
@@ -156,8 +156,6 @@ struct Model
 	
 	Model();
 	Model(MatMesh* matmesh);
-	
-	Matrix4& calculateNormalMatrix(Matrix4& out) const;
 };
 
 class Shader

@@ -228,31 +228,33 @@ DefaultShader::DefaultShader(size_t maxPointLights, size_t maxSpotLights)
 	this->maxPointLights = maxPointLights;
 	this->maxSpotLights = maxSpotLights;
 	
+	use();
+	
 	camPosLoc = getUniform("camPos");
 	camMatLoc = getUniform("camMat");
 	norMatLoc = getUniform("norMat");
 	traMatLoc = getUniform("traMat");
 	
-	lightPointEnLoc = new int[maxPointLights];
-	lightPointPosLoc = new int[maxPointLights];
-	lightPointAmbLoc = new int[maxPointLights];
-	lightPointDiffLoc = new int[maxPointLights];
-	lightPointSpecLoc = new int[maxPointLights];
+	lightPointEnLoc =       new int[maxPointLights];
+	lightPointPosLoc =      new int[maxPointLights];
+	lightPointAmbLoc =      new int[maxPointLights];
+	lightPointDiffLoc =     new int[maxPointLights];
+	lightPointSpecLoc =     new int[maxPointLights];
 	lightPointAttConstLoc = new int[maxPointLights];
-	lightPointAttLinLoc = new int[maxPointLights];
-	lightPointAttQuadLoc = new int[maxPointLights];
+	lightPointAttLinLoc =   new int[maxPointLights];
+	lightPointAttQuadLoc =  new int[maxPointLights];
 	
-	lightSpotEnLoc = new int[maxSpotLights];
-	lightSpotPosLoc = new int[maxSpotLights];
-	lightSpotDirLoc = new int[maxSpotLights];
-	lightSpotAmbLoc = new int[maxSpotLights];
-	lightSpotDiffLoc = new int[maxSpotLights];
-	lightSpotSpecLoc = new int[maxSpotLights];
+	lightSpotEnLoc =       new int[maxSpotLights];
+	lightSpotPosLoc =      new int[maxSpotLights];
+	lightSpotDirLoc =      new int[maxSpotLights];
+	lightSpotAmbLoc =      new int[maxSpotLights];
+	lightSpotDiffLoc =     new int[maxSpotLights];
+	lightSpotSpecLoc =     new int[maxSpotLights];
 	lightSpotAttConstLoc = new int[maxSpotLights];
-	lightSpotAttLinLoc = new int[maxSpotLights];
-	lightSpotAttQuadLoc = new int[maxSpotLights];
-	lightSpotInnerLoc = new int[maxSpotLights];
-	lightSpotOuterLoc = new int[maxSpotLights];
+	lightSpotAttLinLoc =   new int[maxSpotLights];
+	lightSpotAttQuadLoc =  new int[maxSpotLights];
+	lightSpotInnerLoc =    new int[maxSpotLights];
+	lightSpotOuterLoc =    new int[maxSpotLights];
 	
 	size_t i;
 	
@@ -294,14 +296,14 @@ DefaultShader::DefaultShader(size_t maxPointLights, size_t maxSpotLights)
 		setUniformSpotLightEnable(i, false);
 	}
 	
-	matAmbColLoc = getUniform("mat.ambCol");
-	matAmbTexLoc = getUniform("mat.ambTex");
-	matAmbTexEnLoc = getUniform("mat.ambTexEn");
-	matDiffColLoc = getUniform("mat.diffCol");
-	matDiffTexLoc = getUniform("mat.diffTex");
+	matAmbColLoc =    getUniform("mat.ambCol");
+	matAmbTexLoc =    getUniform("mat.ambTex");
+	matAmbTexEnLoc =  getUniform("mat.ambTexEn");
+	matDiffColLoc =   getUniform("mat.diffCol");
+	matDiffTexLoc =   getUniform("mat.diffTex");
 	matDiffTexEnLoc = getUniform("mat.diffTexEn");
-	matSpecColLoc = getUniform("mat.specCol");
-	matSpecTexLoc = getUniform("mat.specTex");
+	matSpecColLoc =   getUniform("mat.specCol");
+	matSpecTexLoc =   getUniform("mat.specTex");
 	matSpecTexEnLoc = getUniform("mat.specTexEn");
 	matSpecShineLoc = getUniform("mat.specShine");
 }

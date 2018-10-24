@@ -49,8 +49,9 @@ struct Matrix4
 	Matrix4();
 	Matrix4(const Quaternion& quat);
 	Matrix4(const SimpleTransform& st);
-	Matrix4(const Vector3& position, const Vector3& direction, const Vector3& up);
+	Matrix4(float left, float right, float bottom, float top, float near, float far);
 	Matrix4(float near, float far, float fovy, float aspectRatio);
+	Matrix4(const Vector3& position, const Vector3& direction, const Vector3& up);
 	
 	float& operator[](int i);
 	
@@ -58,13 +59,9 @@ struct Matrix4
 	Matrix4& operator=(const SimpleTransform& vec);
 	
 	Matrix4 operator*(const Matrix4& b) const;
-	Matrix4 operator*(const Quaternion& quat) const;
 	Matrix4 operator*(const Vector3& vec) const;
-	Matrix4 operator*(const SimpleTransform& st) const;
 	Matrix4& operator*=(const Matrix4& b);
-	Matrix4& operator*=(const Quaternion& quat);
 	Matrix4& operator*=(const Vector3& vec);
-	Matrix4& operator*=(const SimpleTransform& st);
 	
 	Matrix4 operator+(const Vector3& vec) const;
 	Matrix4 operator-(const Vector3& vec) const;
@@ -82,7 +79,7 @@ struct Matrix4
 	Matrix4& idt();
 	Matrix4& inv(bool* success = nullptr);
 	Matrix4& tra();
-	Matrix4& rotate(const Vector3& vec, float rad);
+	Matrix4& rotate(const Vector3& axis, float rad);
 	
 	float det();
 };
@@ -110,10 +107,8 @@ struct Vector3
 	
 	Vector3 operator*(float scalar) const;
 	Vector3 operator*(const Matrix4& quat) const;
-	Vector3 operator*(const Quaternion& quat) const;
 	Vector3& operator*=(float scalar);
 	Vector3& operator*=(const Matrix4& quat);
-	Vector3& operator*=(const Quaternion& quat);
 	
 	Vector3 operator+(const Vector3& b) const;
 	Vector3 operator-(const Vector3& b) const;

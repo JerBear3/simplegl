@@ -16,14 +16,19 @@ Matrix4::Matrix4(const SimpleTransform& st)
 	*this = st;
 }
 
-Matrix4::Matrix4(const Vector3& position, const Vector3& direction, const Vector3& up)
+Matrix4::Matrix4(float left, float right, float bottom, float top, float near, float far)
 {
-	setView(position, direction, up);
+	setOrthographic(left, right, bottom, top, near, far);
 }
 
 Matrix4::Matrix4(float near, float far, float fovy, float aspectRatio)
 {
 	setPerspective(near, far, fovy, aspectRatio);
+}
+
+Matrix4::Matrix4(const Vector3& position, const Vector3& direction, const Vector3& up)
+{
+	setView(position, direction, up);
 }
 
 float& Matrix4::operator[](int i)
@@ -77,22 +82,10 @@ Matrix4 Matrix4::operator*(const Matrix4& b) const
 	return ret;
 }
 
-Matrix4 Matrix4::operator*(const Quaternion& quat) const
-{
-	Matrix4 b(quat);
-	return *this * b;
-}
-
 Matrix4 Matrix4::operator*(const Vector3& vec) const
 {
 	Matrix4 b;
 	return *this * b.setScale(vec);
-}
-
-Matrix4 Matrix4::operator*(const SimpleTransform& st) const
-{
-	Matrix4 b(st);
-	return *this * b;
 }
 
 Matrix4& Matrix4::operator*=(const Matrix4& b)
@@ -101,22 +94,10 @@ Matrix4& Matrix4::operator*=(const Matrix4& b)
 	return *this = c;
 }
 
-Matrix4& Matrix4::operator*=(const Quaternion& quat)
-{
-	Matrix4 b(quat);
-	return *this *= b;
-}
-
 Matrix4& Matrix4::operator*=(const Vector3& vec)
 {
 	Matrix4 b;
 	return *this *= b.setScale(vec);
-}
-
-Matrix4& Matrix4::operator*=(const SimpleTransform& st)
-{
-	Matrix4 b(st);
-	return *this *= b;
 }
 
 Matrix4 Matrix4::operator+(const Vector3& vec) const
@@ -128,7 +109,7 @@ Matrix4 Matrix4::operator+(const Vector3& vec) const
 Matrix4 Matrix4::operator-(const Vector3& vec) const
 {
 	Matrix4 b;
-	return *this * b.setTranslation(Vector3(vec) *= -1.f);
+	return *this * b.setTranslation(vec * -1.f);
 }
 
 Matrix4& Matrix4::operator+=(const Vector3& vec)
@@ -161,6 +142,19 @@ Matrix4& Matrix4::setScale(const Vector3& vec)
 	return *this;
 }
 
+Matrix4& Matrix4::setOrthographic(float left, float right, float bottom, float top, float near, float far)
+{
+	float rml = right - left;
+	float tmb = top - bottom;
+	float fmn = far - near;
+	
+	val[M00] = 2.f / rml; val[M01] = 0.f;       val[M02] =  0.f;       val[M03] = -(right + left) / rml;
+	val[M10] = 0.f;       val[M11] = 2.f / tmb; val[M12] =  0.f;       val[M13] = -(top + bottom) / tmb;
+	val[M20] = 0.f;       val[M21] = 0.f;       val[M22] = -2.f / fmn; val[M23] = -(far + near)   / fmn;
+	val[M30] = 0.f;       val[M31] = 0.f;       val[M32] =  0.f;       val[M33] = 1.f;
+	return *this;
+}
+
 Matrix4& Matrix4::setPerspective(float near, float far, float fovy, float aspectRatio)
 {
 	float fd = (1.f / tan(fovy / 2.f));
@@ -171,16 +165,6 @@ Matrix4& Matrix4::setPerspective(float near, float far, float fovy, float aspect
 	val[M10] = 0.f;              val[M11] = fd;  val[M12] =  0.f; val[M13] = 0.f;
 	val[M20] = 0.f;              val[M21] = 0.f; val[M22] =  a1;  val[M23] = a2;
 	val[M30] = 0.f;              val[M31] = 0.f; val[M32] = -1.f; val[M33] = 0.f;
-	return *this;
-}
-
-Matrix4& Matrix4::setOrthographic(float left, float right, float bottom, float top, float near, float far)
-{
-	val[M00] = 2.f / (right - left); val[M01] = 0;                    val[M02] =  0;                  val[M03] = -(right + left) / (right - left);
-	val[M10] = 0;                    val[M11] = 2.f / (top - bottom); val[M12] =  0;                  val[M13] = -(top + bottom) / (top - bottom);
-	val[M20] = 0;                    val[M21] = 0;                    val[M22] = -2.f / (far - near); val[M23] = -(far + near)   / (far - near);
-	val[M30] = 0;                    val[M31] = 0;                    val[M32] =  0;                  val[M33] = 1;
-	
 	return *this;
 }
 
@@ -211,11 +195,10 @@ Matrix4& Matrix4::calculateNormal(Matrix4& out) const
 
 Matrix4& Matrix4::idt()
 {
-	val[M00] = 1.f; val[M01] = 0.f; val[M02] = 0.f;  val[M03] = 0.f;
-	val[M10] = 0.f; val[M11] = 1.f; val[M12] = 0.f;  val[M13] = 0.f;
-	val[M20] = 0.f; val[M21] = 0.f; val[M22] = 1.f;  val[M23] = 0.f;
-	val[M30] = 0.f; val[M31] = 0.f; val[M32] = 0.f;  val[M33] = 1.f;
-	
+	val[M00] = 1.f; val[M01] = 0.f; val[M02] = 0.f; val[M03] = 0.f;
+	val[M10] = 0.f; val[M11] = 1.f; val[M12] = 0.f; val[M13] = 0.f;
+	val[M20] = 0.f; val[M21] = 0.f; val[M22] = 1.f; val[M23] = 0.f;
+	val[M30] = 0.f; val[M31] = 0.f; val[M32] = 0.f; val[M33] = 1.f;
 	return *this;
 }
 
@@ -295,10 +278,9 @@ Matrix4& Matrix4::tra()
 	return *this = b;
 }
 
-Matrix4& Matrix4::rotate(const Vector3& vec, float rad)
+Matrix4& Matrix4::rotate(const Vector3& axis, float rad)
 {
-	Quaternion quat(vec, rad);
-	return *this *= quat;
+	return *this *= Quaternion(axis, rad);
 }
 
 float Matrix4::det()

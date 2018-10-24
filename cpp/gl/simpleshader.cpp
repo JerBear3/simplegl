@@ -44,11 +44,13 @@ const char __ssc_fragmentShaderSource[] =
 
 SimpleShader::SimpleShader() : Shader(__ssc_vertexShaderSource, __ssc_fragmentShaderSource)
 {
+	use();
+	
 	camMatLoc = getUniform("camMat");
 	traMatLoc = getUniform("traMat");
 	
-	matAmbColLoc = getUniform("mat.ambCol");
-	matAmbTexLoc = getUniform("mat.ambTex");
+	matAmbColLoc =   getUniform("mat.ambCol");
+	matAmbTexLoc =   getUniform("mat.ambTex");
 	matAmbTexEnLoc = getUniform("mat.ambTexEn");
 }
 

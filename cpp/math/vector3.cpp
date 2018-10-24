@@ -13,12 +13,6 @@ Vector3 Vector3::operator*(const Matrix4& mat) const
 			x * mat.val[M20] + y * mat.val[M21] + z * mat.val[M22] + mat.val[M23]);
 }
 
-Vector3 Vector3::operator*(const Quaternion& quat) const
-{
-	Matrix4 mat(quat);
-	return *this * mat;
-}
-
 Vector3& Vector3::operator*=(float scalar)
 {
 	x *= scalar;
@@ -31,12 +25,6 @@ Vector3& Vector3::operator*=(const Matrix4& mat)
 {
 	Vector3 b = *this * mat;
 	return *this = b;
-}
-
-Vector3& Vector3::operator*=(const Quaternion& quat)
-{
-	Matrix4 mat(quat);
-	return *this *= mat;
 }
 
 Vector3 Vector3::operator+(const Vector3& b) const

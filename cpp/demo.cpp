@@ -56,14 +56,12 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 		
-		DefaultShader shader;
-		shader.use();
+		DefaultShader shader(1, 1);
 		
 		DirectionalLight dlight;
 		dlight.direction.set(-1.f, -0.8f, -0.2f);
 		dlight.ambient.set(0.4f, 0.4f, 0.4f);
 		dlight.specular.set(V1);
-		
 		shader.setUniformDirectionalLightEnable(true);
 		shader.setUniformDirectionalLight(dlight);
 		
@@ -81,35 +79,35 @@ int main(int argc, char* argv[])
 		float hh = 0.5f;
 		float hd = 0.5f;
 		
-		vbuf[ 0] = Vertex(Vector3(-hw, -hh,  hd), Vector3(VZ),  0.f, 0.f); //BL  front
-		vbuf[ 1] = Vertex(Vector3( hw, -hh,  hd), Vector3(VZ),  1.f, 0.f); //BR
-		vbuf[ 2] = Vertex(Vector3(-hw,  hh,  hd), Vector3(VZ),  0.f, 1.f); //TL
-		vbuf[ 3] = Vertex(Vector3( hw,  hh,  hd), Vector3(VZ),  1.f, 1.f); //TR
+		vbuf[ 0] = Vertex(Vector3(-hw, -hh,  hd), Vector3(VZ),  0.f, 1.f); //BL  front
+		vbuf[ 1] = Vertex(Vector3( hw, -hh,  hd), Vector3(VZ),  1.f, 1.f); //BR
+		vbuf[ 2] = Vertex(Vector3(-hw,  hh,  hd), Vector3(VZ),  0.f, 0.f); //TL
+		vbuf[ 3] = Vertex(Vector3( hw,  hh,  hd), Vector3(VZ),  1.f, 0.f); //TR
 		
-		vbuf[ 4] = Vertex(Vector3(-hw, -hh, -hd), Vector3(VNZ), 1.f, 0.f); //BR  back
-		vbuf[ 5] = Vertex(Vector3( hw, -hh, -hd), Vector3(VNZ), 0.f, 0.f); //BL
-		vbuf[ 6] = Vertex(Vector3(-hw,  hh, -hd), Vector3(VNZ), 1.f, 1.f); //TR
-		vbuf[ 7] = Vertex(Vector3( hw,  hh, -hd), Vector3(VNZ), 0.f, 1.f); //TL
+		vbuf[ 4] = Vertex(Vector3(-hw, -hh, -hd), Vector3(VNZ), 1.f, 1.f); //BR  back
+		vbuf[ 5] = Vertex(Vector3( hw, -hh, -hd), Vector3(VNZ), 0.f, 1.f); //BL
+		vbuf[ 6] = Vertex(Vector3(-hw,  hh, -hd), Vector3(VNZ), 1.f, 0.f); //TR
+		vbuf[ 7] = Vertex(Vector3( hw,  hh, -hd), Vector3(VNZ), 0.f, 0.f); //TL
 		
-		vbuf[ 8] = Vertex(Vector3(-hw, -hh, -hd), Vector3(VNX), 0.f, 0.f); //BL  left
-		vbuf[ 9] = Vertex(Vector3(-hw, -hh,  hd), Vector3(VNX), 1.f, 0.f); //BR
-		vbuf[10] = Vertex(Vector3(-hw,  hh, -hd), Vector3(VNX), 0.f, 1.f); //TL
-		vbuf[11] = Vertex(Vector3(-hw,  hh,  hd), Vector3(VNX), 1.f, 1.f); //TR
+		vbuf[ 8] = Vertex(Vector3(-hw, -hh, -hd), Vector3(VNX), 0.f, 1.f); //BL  left
+		vbuf[ 9] = Vertex(Vector3(-hw, -hh,  hd), Vector3(VNX), 1.f, 1.f); //BR
+		vbuf[10] = Vertex(Vector3(-hw,  hh, -hd), Vector3(VNX), 0.f, 0.f); //TL
+		vbuf[11] = Vertex(Vector3(-hw,  hh,  hd), Vector3(VNX), 1.f, 0.f); //TR
 		
-		vbuf[12] = Vertex(Vector3( hw, -hh, -hd), Vector3(VX),  1.f, 0.f); //BR  right
-		vbuf[13] = Vertex(Vector3( hw, -hh,  hd), Vector3(VX),  0.f, 0.f); //BL
-		vbuf[14] = Vertex(Vector3( hw,  hh, -hd), Vector3(VX),  1.f, 1.f); //TR
-		vbuf[15] = Vertex(Vector3( hw,  hh,  hd), Vector3(VX),  0.f, 1.f); //TL
+		vbuf[12] = Vertex(Vector3( hw, -hh, -hd), Vector3(VX),  1.f, 1.f); //BR  right
+		vbuf[13] = Vertex(Vector3( hw, -hh,  hd), Vector3(VX),  0.f, 1.f); //BL
+		vbuf[14] = Vertex(Vector3( hw,  hh, -hd), Vector3(VX),  1.f, 0.f); //TR
+		vbuf[15] = Vertex(Vector3( hw,  hh,  hd), Vector3(VX),  0.f, 0.f); //TL
 		
-		vbuf[16] = Vertex(Vector3(-hw,  hh,  hd), Vector3(VY),  0.f, 0.f); //BL  top
-		vbuf[17] = Vertex(Vector3( hw,  hh,  hd), Vector3(VY),  1.f, 0.f); //BR
-		vbuf[18] = Vertex(Vector3(-hw,  hh, -hd), Vector3(VY),  0.f, 1.f); //TL
-		vbuf[19] = Vertex(Vector3( hw,  hh, -hd), Vector3(VY),  1.f, 1.f); //TR
+		vbuf[16] = Vertex(Vector3(-hw,  hh,  hd), Vector3(VY),  0.f, 1.f); //BL  top
+		vbuf[17] = Vertex(Vector3( hw,  hh,  hd), Vector3(VY),  1.f, 1.f); //BR
+		vbuf[18] = Vertex(Vector3(-hw,  hh, -hd), Vector3(VY),  0.f, 0.f); //TL
+		vbuf[19] = Vertex(Vector3( hw,  hh, -hd), Vector3(VY),  1.f, 0.f); //TR
 		
-		vbuf[20] = Vertex(Vector3(-hw, -hh,  hd), Vector3(VNY), 0.f, 1.f); //TL  bottom
-		vbuf[21] = Vertex(Vector3( hw, -hh,  hd), Vector3(VNY), 1.f, 1.f); //TR
-		vbuf[22] = Vertex(Vector3(-hw, -hh, -hd), Vector3(VNY), 0.f, 0.f); //BL
-		vbuf[23] = Vertex(Vector3( hw, -hh, -hd), Vector3(VNY), 1.f, 0.f); //BR
+		vbuf[20] = Vertex(Vector3(-hw, -hh,  hd), Vector3(VNY), 0.f, 0.f); //TL  bottom
+		vbuf[21] = Vertex(Vector3( hw, -hh,  hd), Vector3(VNY), 1.f, 0.f); //TR
+		vbuf[22] = Vertex(Vector3(-hw, -hh, -hd), Vector3(VNY), 0.f, 1.f); //BL
+		vbuf[23] = Vertex(Vector3( hw, -hh, -hd), Vector3(VNY), 1.f, 1.f); //BR
 		
 		ibuf[ 0] = 0;  ibuf[ 1] = 1;  ibuf[ 2] = 2; //front
 		ibuf[ 3] = 3;  ibuf[ 4] = 2;  ibuf[ 5] = 1;
@@ -124,14 +122,13 @@ int main(int argc, char* argv[])
 		ibuf[30] = 22; ibuf[31] = 21; ibuf[32] = 20; //bottom
 		ibuf[33] = 21; ibuf[34] = 22; ibuf[35] = 23;
 		
-		Mesh meshCube(vbuf, 24, ibuf, 36);
+		Mesh mesh(vbuf, 24, ibuf, 36);
 		delete[] vbuf;
 		delete[] ibuf;
 		
-		MatMesh matmeshCube(&mat, &meshCube);
+		MatMesh matmesh(&mat, &mesh);
 		
-		Model model;
-		model.data.push_back(&matmeshCube);
+		Model model(&matmesh);
 		model.transform.setTranslation(Vector3(0.f, 0.f, -3.f));
 		
 		//render loop

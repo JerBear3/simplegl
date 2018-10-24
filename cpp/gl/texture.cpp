@@ -10,7 +10,6 @@ using namespace std;
 Texture::Texture(const char* file, unsigned int wrapS, unsigned int wrapT, unsigned int minFilter, unsigned int magFilter)
 {
 	int nrComponents;
-	stbi_set_flip_vertically_on_load(true);
 	unsigned char *data = stbi_load(file, &width, &height, &nrComponents, 0);
 	
 	if(data)

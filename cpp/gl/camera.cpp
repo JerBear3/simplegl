@@ -96,6 +96,8 @@ void Camera::calculateFPSView(GLFWwindow* window)
 	}
 	else
 	{
+		yaw = 0;
+		pitch = 0;
 		firstFrame = false;
 	}
 	
