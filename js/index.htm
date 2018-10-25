@@ -106,17 +106,19 @@ function main()
 
 function draw()
 {
-	requestAnimationFrame(draw);
-	
+	//---begin drawing---//
 	gl.clearColor(0, 0, 0, 1);
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	
 	if(mouseLook) camera.calculateFPSView(keyState, mouseX, mouseY);
+	shader.use();
 	shader.setUniformCamera(camera);
 	
 	model.transform.rotate(VY, getDeltaSpeed(1) * DEGRAD);
 	shader.render(model);
+	//---end drawing---//
 	
+	requestAnimationFrame(draw);
 	updateDeltaTime();
 }
 

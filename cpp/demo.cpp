@@ -142,6 +142,7 @@ int main(int argc, char* argv[])
 				break;
 			
 			camera.calculateFPSView(window);
+			shader.use();
 			shader.setUniformCamera(camera);
 			
 			model.transform.rotate(Vector3(VY), getDeltaSpeed(1.f) * DEGRAD);
