@@ -31,12 +31,12 @@ const PI2 = 2 * Math.PI;
 const RADDEG = 180 / PI;
 const DEGRAD = PI / 180;
 
-var tmpMat1_mathjs = new Matrix4();
-var tmpMat2_mathjs = new Matrix4();
-var tmpQuat_mathjs = new Quaternion();
-var tmpVec1_mathjs = new Vector3();
-var tmpVec2_mathjs = new Vector3();
-var tmpVec3_mathjs = new Vector3();
+var __mjs_tmpMat1 = new Matrix4();
+var __mjs_tmpMat2 = new Matrix4();
+var __mjs_tmpQuat = new Quaternion();
+var __mjs_tmpVec1 = new Vector3();
+var __mjs_tmpVec2 = new Vector3();
+var __mjs_tmpVec3 = new Vector3();
 
 function Matrix4()
 {
@@ -73,32 +73,32 @@ function Matrix4()
 	{
 		if(b instanceof Matrix4)
 		{
-			tmpMat1_mathjs.val[M00] = this.val[M00] * b.val[M00] + this.val[M01] * b.val[M10] + this.val[M02] * b.val[M20] + this.val[M03] * b.val[M30];
-			tmpMat1_mathjs.val[M01] = this.val[M00] * b.val[M01] + this.val[M01] * b.val[M11] + this.val[M02] * b.val[M21] + this.val[M03] * b.val[M31];
-			tmpMat1_mathjs.val[M02] = this.val[M00] * b.val[M02] + this.val[M01] * b.val[M12] + this.val[M02] * b.val[M22] + this.val[M03] * b.val[M32];
-			tmpMat1_mathjs.val[M03] = this.val[M00] * b.val[M03] + this.val[M01] * b.val[M13] + this.val[M02] * b.val[M23] + this.val[M03] * b.val[M33];
-			tmpMat1_mathjs.val[M10] = this.val[M10] * b.val[M00] + this.val[M11] * b.val[M10] + this.val[M12] * b.val[M20] + this.val[M13] * b.val[M30];
-			tmpMat1_mathjs.val[M11] = this.val[M10] * b.val[M01] + this.val[M11] * b.val[M11] + this.val[M12] * b.val[M21] + this.val[M13] * b.val[M31];
-			tmpMat1_mathjs.val[M12] = this.val[M10] * b.val[M02] + this.val[M11] * b.val[M12] + this.val[M12] * b.val[M22] + this.val[M13] * b.val[M32];
-			tmpMat1_mathjs.val[M13] = this.val[M10] * b.val[M03] + this.val[M11] * b.val[M13] + this.val[M12] * b.val[M23] + this.val[M13] * b.val[M33];
-			tmpMat1_mathjs.val[M20] = this.val[M20] * b.val[M00] + this.val[M21] * b.val[M10] + this.val[M22] * b.val[M20] + this.val[M23] * b.val[M30];
-			tmpMat1_mathjs.val[M21] = this.val[M20] * b.val[M01] + this.val[M21] * b.val[M11] + this.val[M22] * b.val[M21] + this.val[M23] * b.val[M31];
-			tmpMat1_mathjs.val[M22] = this.val[M20] * b.val[M02] + this.val[M21] * b.val[M12] + this.val[M22] * b.val[M22] + this.val[M23] * b.val[M32];
-			tmpMat1_mathjs.val[M23] = this.val[M20] * b.val[M03] + this.val[M21] * b.val[M13] + this.val[M22] * b.val[M23] + this.val[M23] * b.val[M33];
-			tmpMat1_mathjs.val[M30] = this.val[M30] * b.val[M00] + this.val[M31] * b.val[M10] + this.val[M32] * b.val[M20] + this.val[M33] * b.val[M30];
-			tmpMat1_mathjs.val[M31] = this.val[M30] * b.val[M01] + this.val[M31] * b.val[M11] + this.val[M32] * b.val[M21] + this.val[M33] * b.val[M31];
-			tmpMat1_mathjs.val[M32] = this.val[M30] * b.val[M02] + this.val[M31] * b.val[M12] + this.val[M32] * b.val[M22] + this.val[M33] * b.val[M32];
-			tmpMat1_mathjs.val[M33] = this.val[M30] * b.val[M03] + this.val[M31] * b.val[M13] + this.val[M32] * b.val[M23] + this.val[M33] * b.val[M33];
+			__mjs_tmpMat1.val[M00] = this.val[M00] * b.val[M00] + this.val[M01] * b.val[M10] + this.val[M02] * b.val[M20] + this.val[M03] * b.val[M30];
+			__mjs_tmpMat1.val[M01] = this.val[M00] * b.val[M01] + this.val[M01] * b.val[M11] + this.val[M02] * b.val[M21] + this.val[M03] * b.val[M31];
+			__mjs_tmpMat1.val[M02] = this.val[M00] * b.val[M02] + this.val[M01] * b.val[M12] + this.val[M02] * b.val[M22] + this.val[M03] * b.val[M32];
+			__mjs_tmpMat1.val[M03] = this.val[M00] * b.val[M03] + this.val[M01] * b.val[M13] + this.val[M02] * b.val[M23] + this.val[M03] * b.val[M33];
+			__mjs_tmpMat1.val[M10] = this.val[M10] * b.val[M00] + this.val[M11] * b.val[M10] + this.val[M12] * b.val[M20] + this.val[M13] * b.val[M30];
+			__mjs_tmpMat1.val[M11] = this.val[M10] * b.val[M01] + this.val[M11] * b.val[M11] + this.val[M12] * b.val[M21] + this.val[M13] * b.val[M31];
+			__mjs_tmpMat1.val[M12] = this.val[M10] * b.val[M02] + this.val[M11] * b.val[M12] + this.val[M12] * b.val[M22] + this.val[M13] * b.val[M32];
+			__mjs_tmpMat1.val[M13] = this.val[M10] * b.val[M03] + this.val[M11] * b.val[M13] + this.val[M12] * b.val[M23] + this.val[M13] * b.val[M33];
+			__mjs_tmpMat1.val[M20] = this.val[M20] * b.val[M00] + this.val[M21] * b.val[M10] + this.val[M22] * b.val[M20] + this.val[M23] * b.val[M30];
+			__mjs_tmpMat1.val[M21] = this.val[M20] * b.val[M01] + this.val[M21] * b.val[M11] + this.val[M22] * b.val[M21] + this.val[M23] * b.val[M31];
+			__mjs_tmpMat1.val[M22] = this.val[M20] * b.val[M02] + this.val[M21] * b.val[M12] + this.val[M22] * b.val[M22] + this.val[M23] * b.val[M32];
+			__mjs_tmpMat1.val[M23] = this.val[M20] * b.val[M03] + this.val[M21] * b.val[M13] + this.val[M22] * b.val[M23] + this.val[M23] * b.val[M33];
+			__mjs_tmpMat1.val[M30] = this.val[M30] * b.val[M00] + this.val[M31] * b.val[M10] + this.val[M32] * b.val[M20] + this.val[M33] * b.val[M30];
+			__mjs_tmpMat1.val[M31] = this.val[M30] * b.val[M01] + this.val[M31] * b.val[M11] + this.val[M32] * b.val[M21] + this.val[M33] * b.val[M31];
+			__mjs_tmpMat1.val[M32] = this.val[M30] * b.val[M02] + this.val[M31] * b.val[M12] + this.val[M32] * b.val[M22] + this.val[M33] * b.val[M32];
+			__mjs_tmpMat1.val[M33] = this.val[M30] * b.val[M03] + this.val[M31] * b.val[M13] + this.val[M32] * b.val[M23] + this.val[M33] * b.val[M33];
 			
-			this.set(tmpMat1_mathjs);
+			this.set(__mjs_tmpMat1);
 		}
 		else if(b instanceof Quaternion || b instanceof SimpleTransform)
 		{
-			this.mul(tmpMat2_mathjs.set(b));
+			this.mul(__mjs_tmpMat2.set(b));
 		}
 		else if(b instanceof Vector3)
 		{
-			this.mul(tmpMat2_mathjs.setScale(b));
+			this.mul(__mjs_tmpMat2.setScale(b));
 		}
 		
 		return this;
@@ -106,12 +106,12 @@ function Matrix4()
 	
 	this.add = function(vec)
 	{
-		return this.mul(tmpMat2_mathjs.setTranslation(vec));
+		return this.mul(__mjs_tmpMat2.setTranslation(vec));
 	};
 	
 	this.sub = function(vec)
 	{
-		return this.mul(tmpMat2_mathjs.setTranslation(tmpVec1_mathjs.set(vec).scl(-1)));
+		return this.mul(__mjs_tmpMat2.setTranslation(__mjs_tmpVec1.set(vec).scl(-1)));
 	};
 	
 	this.setTranslation = function(vec)
@@ -160,11 +160,11 @@ function Matrix4()
 	
 	this.setView = function(position, direction, up)
 	{
-		var z = tmpVec2_mathjs.set(direction).nor(); //direction
-		var x = tmpVec3_mathjs.set(z).crs(up).nor(); //right
+		var z = __mjs_tmpVec2.set(direction).nor(); //direction
+		var x = __mjs_tmpVec3.set(z).crs(up).nor(); //right
 		this.val[M00] =  x.x; this.val[M01] =  x.y; this.val[M02] =  x.z; this.val[M03] = 0;
 		
-		var y = tmpVec3_mathjs.crs(z).nor(); //corrected up
+		var y = __mjs_tmpVec3.crs(z).nor(); //corrected up
 		this.val[M10] =  y.x; this.val[M11] =  y.y; this.val[M12] =  y.z; this.val[M13] = 0;
 		this.val[M20] = -z.x; this.val[M21] = -z.y; this.val[M22] = -z.z; this.val[M23] = 0;
 		this.val[M30] =  0;   this.val[M31] =  0;   this.val[M32] =  0;   this.val[M33] = 1;
@@ -196,69 +196,69 @@ function Matrix4()
 		if(rdet == 0)
 			return false;
 		
-		tmpMat1_mathjs.val[M00] = this.val[M12] * this.val[M23] * this.val[M31] - this.val[M13] * this.val[M22] * this.val[M31] + this.val[M13] * this.val[M21] * this.val[M32] -
+		__mjs_tmpMat1.val[M00] = this.val[M12] * this.val[M23] * this.val[M31] - this.val[M13] * this.val[M22] * this.val[M31] + this.val[M13] * this.val[M21] * this.val[M32] -
 				this.val[M11] * this.val[M23] * this.val[M32] - this.val[M12] * this.val[M21] * this.val[M33] + this.val[M11] * this.val[M22] * this.val[M33];
-		tmpMat1_mathjs.val[M01] = this.val[M03] * this.val[M22] * this.val[M31] - this.val[M02] * this.val[M23] * this.val[M31] - this.val[M03] * this.val[M21] * this.val[M32] +
+		__mjs_tmpMat1.val[M01] = this.val[M03] * this.val[M22] * this.val[M31] - this.val[M02] * this.val[M23] * this.val[M31] - this.val[M03] * this.val[M21] * this.val[M32] +
 				this.val[M01] * this.val[M23] * this.val[M32] + this.val[M02] * this.val[M21] * this.val[M33] - this.val[M01] * this.val[M22] * this.val[M33];
-		tmpMat1_mathjs.val[M02] = this.val[M02] * this.val[M13] * this.val[M31] - this.val[M03] * this.val[M12] * this.val[M31] + this.val[M03] * this.val[M11] * this.val[M32] -
+		__mjs_tmpMat1.val[M02] = this.val[M02] * this.val[M13] * this.val[M31] - this.val[M03] * this.val[M12] * this.val[M31] + this.val[M03] * this.val[M11] * this.val[M32] -
 				this.val[M01] * this.val[M13] * this.val[M32] - this.val[M02] * this.val[M11] * this.val[M33] + this.val[M01] * this.val[M12] * this.val[M33];
-		tmpMat1_mathjs.val[M03] = this.val[M03] * this.val[M12] * this.val[M21] - this.val[M02] * this.val[M13] * this.val[M21] - this.val[M03] * this.val[M11] * this.val[M22] +
+		__mjs_tmpMat1.val[M03] = this.val[M03] * this.val[M12] * this.val[M21] - this.val[M02] * this.val[M13] * this.val[M21] - this.val[M03] * this.val[M11] * this.val[M22] +
 				this.val[M01] * this.val[M13] * this.val[M22] + this.val[M02] * this.val[M11] * this.val[M23] - this.val[M01] * this.val[M12] * this.val[M23];
-		tmpMat1_mathjs.val[M10] = this.val[M13] * this.val[M22] * this.val[M30] - this.val[M12] * this.val[M23] * this.val[M30] - this.val[M13] * this.val[M20] * this.val[M32] +
+		__mjs_tmpMat1.val[M10] = this.val[M13] * this.val[M22] * this.val[M30] - this.val[M12] * this.val[M23] * this.val[M30] - this.val[M13] * this.val[M20] * this.val[M32] +
 				this.val[M10] * this.val[M23] * this.val[M32] + this.val[M12] * this.val[M20] * this.val[M33] - this.val[M10] * this.val[M22] * this.val[M33];
-		tmpMat1_mathjs.val[M11] = this.val[M02] * this.val[M23] * this.val[M30] - this.val[M03] * this.val[M22] * this.val[M30] + this.val[M03] * this.val[M20] * this.val[M32] -
+		__mjs_tmpMat1.val[M11] = this.val[M02] * this.val[M23] * this.val[M30] - this.val[M03] * this.val[M22] * this.val[M30] + this.val[M03] * this.val[M20] * this.val[M32] -
 				this.val[M00] * this.val[M23] * this.val[M32] - this.val[M02] * this.val[M20] * this.val[M33] + this.val[M00] * this.val[M22] * this.val[M33];
-		tmpMat1_mathjs.val[M12] = this.val[M03] * this.val[M12] * this.val[M30] - this.val[M02] * this.val[M13] * this.val[M30] - this.val[M03] * this.val[M10] * this.val[M32] +
+		__mjs_tmpMat1.val[M12] = this.val[M03] * this.val[M12] * this.val[M30] - this.val[M02] * this.val[M13] * this.val[M30] - this.val[M03] * this.val[M10] * this.val[M32] +
 				this.val[M00] * this.val[M13] * this.val[M32] + this.val[M02] * this.val[M10] * this.val[M33] - this.val[M00] * this.val[M12] * this.val[M33];
-		tmpMat1_mathjs.val[M13] = this.val[M02] * this.val[M13] * this.val[M20] - this.val[M03] * this.val[M12] * this.val[M20] + this.val[M03] * this.val[M10] * this.val[M22] -
+		__mjs_tmpMat1.val[M13] = this.val[M02] * this.val[M13] * this.val[M20] - this.val[M03] * this.val[M12] * this.val[M20] + this.val[M03] * this.val[M10] * this.val[M22] -
 				this.val[M00] * this.val[M13] * this.val[M22] - this.val[M02] * this.val[M10] * this.val[M23] + this.val[M00] * this.val[M12] * this.val[M23];
-		tmpMat1_mathjs.val[M20] = this.val[M11] * this.val[M23] * this.val[M30] - this.val[M13] * this.val[M21] * this.val[M30] + this.val[M13] * this.val[M20] * this.val[M31] -
+		__mjs_tmpMat1.val[M20] = this.val[M11] * this.val[M23] * this.val[M30] - this.val[M13] * this.val[M21] * this.val[M30] + this.val[M13] * this.val[M20] * this.val[M31] -
 				this.val[M10] * this.val[M23] * this.val[M31] - this.val[M11] * this.val[M20] * this.val[M33] + this.val[M10] * this.val[M21] * this.val[M33];
-		tmpMat1_mathjs.val[M21] = this.val[M03] * this.val[M21] * this.val[M30] - this.val[M01] * this.val[M23] * this.val[M30] - this.val[M03] * this.val[M20] * this.val[M31] +
+		__mjs_tmpMat1.val[M21] = this.val[M03] * this.val[M21] * this.val[M30] - this.val[M01] * this.val[M23] * this.val[M30] - this.val[M03] * this.val[M20] * this.val[M31] +
 				this.val[M00] * this.val[M23] * this.val[M31] + this.val[M01] * this.val[M20] * this.val[M33] - this.val[M00] * this.val[M21] * this.val[M33];
-		tmpMat1_mathjs.val[M22] = this.val[M01] * this.val[M13] * this.val[M30] - this.val[M03] * this.val[M11] * this.val[M30] + this.val[M03] * this.val[M10] * this.val[M31] -
+		__mjs_tmpMat1.val[M22] = this.val[M01] * this.val[M13] * this.val[M30] - this.val[M03] * this.val[M11] * this.val[M30] + this.val[M03] * this.val[M10] * this.val[M31] -
 				this.val[M00] * this.val[M13] * this.val[M31] - this.val[M01] * this.val[M10] * this.val[M33] + this.val[M00] * this.val[M11] * this.val[M33];
-		tmpMat1_mathjs.val[M23] = this.val[M03] * this.val[M11] * this.val[M20] - this.val[M01] * this.val[M13] * this.val[M20] - this.val[M03] * this.val[M10] * this.val[M21] +
+		__mjs_tmpMat1.val[M23] = this.val[M03] * this.val[M11] * this.val[M20] - this.val[M01] * this.val[M13] * this.val[M20] - this.val[M03] * this.val[M10] * this.val[M21] +
 				this.val[M00] * this.val[M13] * this.val[M21] + this.val[M01] * this.val[M10] * this.val[M23] - this.val[M00] * this.val[M11] * this.val[M23];
-		tmpMat1_mathjs.val[M30] = this.val[M12] * this.val[M21] * this.val[M30] - this.val[M11] * this.val[M22] * this.val[M30] - this.val[M12] * this.val[M20] * this.val[M31] +
+		__mjs_tmpMat1.val[M30] = this.val[M12] * this.val[M21] * this.val[M30] - this.val[M11] * this.val[M22] * this.val[M30] - this.val[M12] * this.val[M20] * this.val[M31] +
 				this.val[M10] * this.val[M22] * this.val[M31] + this.val[M11] * this.val[M20] * this.val[M32] - this.val[M10] * this.val[M21] * this.val[M32];
-		tmpMat1_mathjs.val[M31] = this.val[M01] * this.val[M22] * this.val[M30] - this.val[M02] * this.val[M21] * this.val[M30] + this.val[M02] * this.val[M20] * this.val[M31] -
+		__mjs_tmpMat1.val[M31] = this.val[M01] * this.val[M22] * this.val[M30] - this.val[M02] * this.val[M21] * this.val[M30] + this.val[M02] * this.val[M20] * this.val[M31] -
 				this.val[M00] * this.val[M22] * this.val[M31] - this.val[M01] * this.val[M20] * this.val[M32] + this.val[M00] * this.val[M21] * this.val[M32];
-		tmpMat1_mathjs.val[M32] = this.val[M02] * this.val[M11] * this.val[M30] - this.val[M01] * this.val[M12] * this.val[M30] - this.val[M02] * this.val[M10] * this.val[M31] +
+		__mjs_tmpMat1.val[M32] = this.val[M02] * this.val[M11] * this.val[M30] - this.val[M01] * this.val[M12] * this.val[M30] - this.val[M02] * this.val[M10] * this.val[M31] +
 				this.val[M00] * this.val[M12] * this.val[M31] + this.val[M01] * this.val[M10] * this.val[M32] - this.val[M00] * this.val[M11] * this.val[M32];
-		tmpMat1_mathjs.val[M33] = this.val[M01] * this.val[M12] * this.val[M20] - this.val[M02] * this.val[M11] * this.val[M20] + this.val[M02] * this.val[M10] * this.val[M21] -
+		__mjs_tmpMat1.val[M33] = this.val[M01] * this.val[M12] * this.val[M20] - this.val[M02] * this.val[M11] * this.val[M20] + this.val[M02] * this.val[M10] * this.val[M21] -
 				this.val[M00] * this.val[M12] * this.val[M21] - this.val[M01] * this.val[M10] * this.val[M22] + this.val[M00] * this.val[M11] * this.val[M22];
 		
 		for(var i = 0; i < 16; i++)
-			this.val[i] = tmpMat1_mathjs.val[i] / rdet;
+			this.val[i] = __mjs_tmpMat1.val[i] / rdet;
 		
 		return true;
 	};
 	
 	this.tra = function()
 	{
-		tmpMat1_mathjs.val[M00] = this.val[M00];
-		tmpMat1_mathjs.val[M01] = this.val[M10];
-		tmpMat1_mathjs.val[M02] = this.val[M20];
-		tmpMat1_mathjs.val[M03] = this.val[M30];
-		tmpMat1_mathjs.val[M10] = this.val[M01];
-		tmpMat1_mathjs.val[M11] = this.val[M11];
-		tmpMat1_mathjs.val[M12] = this.val[M21];
-		tmpMat1_mathjs.val[M13] = this.val[M31];
-		tmpMat1_mathjs.val[M20] = this.val[M02];
-		tmpMat1_mathjs.val[M21] = this.val[M12];
-		tmpMat1_mathjs.val[M22] = this.val[M22];
-		tmpMat1_mathjs.val[M23] = this.val[M32];
-		tmpMat1_mathjs.val[M30] = this.val[M03];
-		tmpMat1_mathjs.val[M31] = this.val[M13];
-		tmpMat1_mathjs.val[M32] = this.val[M23];
-		tmpMat1_mathjs.val[M33] = this.val[M33];
-		return this.set(tmpMat1_mathjs);
+		__mjs_tmpMat1.val[M00] = this.val[M00];
+		__mjs_tmpMat1.val[M01] = this.val[M10];
+		__mjs_tmpMat1.val[M02] = this.val[M20];
+		__mjs_tmpMat1.val[M03] = this.val[M30];
+		__mjs_tmpMat1.val[M10] = this.val[M01];
+		__mjs_tmpMat1.val[M11] = this.val[M11];
+		__mjs_tmpMat1.val[M12] = this.val[M21];
+		__mjs_tmpMat1.val[M13] = this.val[M31];
+		__mjs_tmpMat1.val[M20] = this.val[M02];
+		__mjs_tmpMat1.val[M21] = this.val[M12];
+		__mjs_tmpMat1.val[M22] = this.val[M22];
+		__mjs_tmpMat1.val[M23] = this.val[M32];
+		__mjs_tmpMat1.val[M30] = this.val[M03];
+		__mjs_tmpMat1.val[M31] = this.val[M13];
+		__mjs_tmpMat1.val[M32] = this.val[M23];
+		__mjs_tmpMat1.val[M33] = this.val[M33];
+		return this.set(__mjs_tmpMat1);
 	};
 	
 	this.rotate = function(axis, rad)
 	{
-		return this.mul(tmpQuat_mathjs.setRotation(axis, rad));
+		return this.mul(__mjs_tmpQuat.setRotation(axis, rad));
 	};
 	
 	this.det = function()
@@ -403,15 +403,15 @@ function Vector3(x, y, z)
 	
 	this.crs = function(vec)
 	{
-		tmpVec1_mathjs.x = this.y * vec.z - this.z * vec.y;
-		tmpVec1_mathjs.y = this.z * vec.x - this.x * vec.z;
-		tmpVec1_mathjs.z = this.x * vec.y - this.y * vec.x;
-		return this.set(tmpVec1_mathjs);
+		__mjs_tmpVec1.x = this.y * vec.z - this.z * vec.y;
+		__mjs_tmpVec1.y = this.z * vec.x - this.x * vec.z;
+		__mjs_tmpVec1.z = this.x * vec.y - this.y * vec.x;
+		return this.set(__mjs_tmpVec1);
 	}
 	
 	this.rotate = function(axis, rad)
 	{
-		return this.mul(tmpMat1_mathjs.set(tmpQuat_mathjs.setRotation(axis, rad)));
+		return this.mul(__mjs_tmpMat1.set(__mjs_tmpQuat.setRotation(axis, rad)));
 	}
 	
 	this.len2 = function()

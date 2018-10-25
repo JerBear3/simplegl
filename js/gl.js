@@ -8,7 +8,10 @@ const COLOR_CYAN    = new Color(0, 1, 1, 1);
 const COLOR_MAGENTA = new Color(1, 0, 1, 1);
 const COLOR_WHITE   = new Color(1, 1, 1, 1);
 
-var tmpVec_gljs = new Vector3();
+var deltaTime = 0;
+
+var __gljs_tmpVec = new Vector3();
+var __gljs_prvTime = 0;
 
 function Color(r, g, b, a)
 {
@@ -78,13 +81,13 @@ function Camera()
 	
 	this.setFPSLookAt = function(at)
 	{
-		at = tmpVec_gljs.set(this.position).sub(this.position).nor();
+		at = __gljs_tmpVec.set(this.position).sub(this.position).nor();
 	
 		this.setFPSYaw(-PIH + Math.atan2(-at.z, at.x));
 		this.setFPSPitch(Math.atan2(at.y, Math.sqrt(at.x * at.x + at.z * at.z)));
 	};
 	
-	this.calculateFPSView = function(keyState, mouseX, mouseY, delta)
+	this.calculateFPSView = function(keyState, mouseX, mouseY)
 	{
 		if(!this.firstFrame)
 		{
@@ -97,7 +100,7 @@ function Camera()
 			this.up.set(VY);
 			this.direction.set(VNZ);
 			this.direction.rotate(this.up, this.yaw);
-			this.direction.rotate(tmpVec_gljs.set(this.direction).crs(this.up), this.pitch);
+			this.direction.rotate(__gljs_tmpVec.set(this.direction).crs(this.up), this.pitch);
 		}
 		else
 		{
@@ -109,19 +112,19 @@ function Camera()
 		this.prvx = mouseX;
 		this.prvy = mouseY;
 		
-		var deltaSpeed = this.speed * delta * 60;
+		var deltaSpeed = getDeltaSpeed(this.speed);
 		
 		if(keyState[this.keyForward])
-			this.position.add(tmpVec_gljs.set(this.direction.x, 0, this.direction.z).nor().scl(deltaSpeed));
+			this.position.add(__gljs_tmpVec.set(this.direction.x, 0, this.direction.z).nor().scl(deltaSpeed));
 		
 		if(keyState[this.keyBackward])
-			this.position.sub(tmpVec_gljs.set(this.direction.x, 0, this.direction.z).nor().scl(deltaSpeed));
+			this.position.sub(__gljs_tmpVec.set(this.direction.x, 0, this.direction.z).nor().scl(deltaSpeed));
 		
 		if(keyState[this.keyLeft])
-			this.position.sub(tmpVec_gljs.set(this.direction).crs(VY).nor().scl(deltaSpeed));
+			this.position.sub(__gljs_tmpVec.set(this.direction).crs(VY).nor().scl(deltaSpeed));
 		
 		if(keyState[this.keyRight])
-			this.position.add(tmpVec_gljs.set(this.direction).crs(VY).nor().scl(deltaSpeed));
+			this.position.add(__gljs_tmpVec.set(this.direction).crs(VY).nor().scl(deltaSpeed));
 		
 		if(keyState[this.keyUp])
 			this.position.y += deltaSpeed;
@@ -882,4 +885,16 @@ function createSimpleShader(gl)
 	};
 	
 	return shader;
+}
+
+function updateDeltaTime()
+{
+	var curTime = performance.now() / 1000;
+	deltaTime = curTime - __gljs_prvTime;
+	__gljs_prvTime = curTime;
+}
+
+function getDeltaSpeed(originalSpeed, targetFPS = 60)
+{
+	return originalSpeed * deltaTime * targetFPS;
 }
