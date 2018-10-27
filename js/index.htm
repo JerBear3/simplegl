@@ -18,10 +18,10 @@ var mouseState = {};
 var mouseLook = false, mouseX = 0, mouseY = 0;
 
 canvas = document.getElementById("canvas");
+gl = canvas.getContext("webgl2");
 
 function main()
 {
-	gl = canvas.getContext("webgl2");
 	camera = new Camera();
 	
 	gl.enable(this.gl.DEPTH_TEST);
@@ -39,8 +39,8 @@ function main()
 	shader.setUniformDirectionalLightEnable(true);
 	shader.setUniformDirectionalLight(dlight);
 	
-	var mat = new Material();
 	var tex = new Texture(gl, "bonzi.png");
+	var mat = new Material();
 	mat.ambientTexture = tex;
 	mat.diffuseTexture = tex;
 	mat.ambientTextureEnable = true;

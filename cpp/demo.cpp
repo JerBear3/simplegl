@@ -65,8 +65,8 @@ int main(int argc, char* argv[])
 		shader.setUniformDirectionalLightEnable(true);
 		shader.setUniformDirectionalLight(dlight);
 		
-		Material mat;
 		Texture texture("bonzi.png");
+		Material mat;
 		mat.ambientTexture = &texture;
 		mat.diffuseTexture = &texture;
 		mat.ambientTextureEnable = true;

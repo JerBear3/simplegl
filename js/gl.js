@@ -142,10 +142,20 @@ function Camera()
 
 function Vertex(position, normal, u, v)
 {
-	this.position = position ? position : new Vector3();
-	this.normal = normal ? normal : new Vector3();
-	this.u = u ? u : 0;
-	this.v = v ? v : 0;
+	if(position instanceof Vertex)
+	{
+		this.position = new Vector3(position.position);
+		this.normal = new Vector3(position.normal);
+		this.u = position.u;
+		this.v = position.v;
+	}
+	else
+	{
+		this.position = new Vector3(position ? position : 0);
+		this.normal = new Vector3(normal ? normal : 0);
+		this.u = u ? u : 0;
+		this.v = v ? v : 0;
+	}
 }
 
 function Texture(gl, file, wrapS, wrapT, minFilter, magFilter)
