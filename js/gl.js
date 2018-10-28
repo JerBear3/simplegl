@@ -232,7 +232,7 @@ function Mesh(gl, vertices, indices)
 	var vertexAttCnt = 8;
 	var vertexSize = floatSize * vertexAttCnt;
 	
-	var vertexData = new Array(vertices.length * vertexAttCnt);
+	var vertexData = new Float32Array(vertices.length * vertexAttCnt);
 	for(var i = 0; i < vertices.length; i++)
 	{
 		var vi = i * vertexAttCnt;

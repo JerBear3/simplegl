@@ -40,7 +40,7 @@ var __mjs_tmpVec3 = new Vector3();
 
 function Matrix4()
 {
-	this.val = new Array(16);
+	this.val = new Float32Array(16);
 	
 	this.set = function(b)
 	{
@@ -63,7 +63,7 @@ function Matrix4()
 		}
 		else if(b instanceof SimpleTransform)
 		{
-			this.setTranslation(b.translation).mul(b.rotation).mul(scale);
+			this.setTranslation(b.translation).mul(b.rotation).mul(b.scale);
 		}
 		
 		return this;
@@ -436,7 +436,7 @@ function SimpleTransform()
 {
 	this.translation = new Vector3();
 	this.rotation = new Quaternion();
-	this.scale = new Vector3();
+	this.scale = new Vector3(V1);
 	
 	this.set = function(st)
 	{

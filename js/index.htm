@@ -47,7 +47,7 @@ function main()
 	mat.diffuseTextureEnable = true;
 	
 	var vbuf = new Array(24);
-	var ibuf = new Array(36);
+	var ibuf = new Int32Array(36);
 	
 	var hw = 0.5;
 	var hh = 0.5;
@@ -163,7 +163,7 @@ canvas.onpointerdown = function(e)
 {
 	mouseState[e.button] = true;
 	
-	canvas.requestPointerLock();
+	if(!mouseLook) canvas.requestPointerLock();
 	canvas.onpointermove(e);
 };
 
