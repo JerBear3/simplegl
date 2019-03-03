@@ -112,6 +112,7 @@ struct Vector3
 	
 	Vector3 operator+(const Vector3& b) const;
 	Vector3 operator-(const Vector3& b) const;
+	Vector3 operator-() const;
 	Vector3& operator+=(const Vector3& b);
 	Vector3& operator-=(const Vector3& b);
 	

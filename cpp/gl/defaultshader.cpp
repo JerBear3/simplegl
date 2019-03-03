@@ -371,7 +371,7 @@ void DefaultShader::setUniformMaterial(const Material& material)
 	setUniform1b(matDiffTexEnLoc, material.diffuseTextureEnable);
 	setUniform4f(matSpecColLoc, material.specularColor);
 	setUniform1b(matSpecTexLoc, 2);
-	setUniform1b(matSpecTexEnLoc, material.specularTextureEnable);
+	setUniform1i(matSpecTexEnLoc, material.specularTextureEnable);
 	setUniform1f(matSpecShineLoc, material.specularShine);
 }
 

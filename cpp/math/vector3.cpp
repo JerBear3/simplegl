@@ -39,6 +39,11 @@ Vector3 Vector3::operator-(const Vector3& b) const
 	return c -= b;
 }
 
+Vector3 Vector3::operator-() const
+{
+	return *this * -1;
+}
+
 Vector3& Vector3::operator+=(const Vector3& b)
 {
 	x += b.x;

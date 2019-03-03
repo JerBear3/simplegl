@@ -68,7 +68,7 @@ void Camera::setFPSLookAt(Vector3 at)
 	at -= position;
 	at.nor();
 	
-	setFPSYaw(-PIH + atan2(-at.z, at.x));
+	setFPSYaw(atan2(-at.z, at.x) - PIH);
 	setFPSPitch(atan2(at.y, sqrt(at.x * at.x + at.z * at.z)));
 }
 
