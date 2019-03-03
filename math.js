@@ -42,8 +42,8 @@ class Matrix4
 		return this;
 	}
 	
-	//Multiply this matrix with b. If b is a...
-	// - Matrix4: doe matrix multiplication (A)
+	//Multiply this matrix with b. If b is:
+	// - Matrix4: do matrix multiplication (A)
 	// - Quaternion or SimpleTransform: convert b to matrix and then multiply (B)
 	// - Vector3: convert b to a scaling matrix (setScale) and then multiply (C)
 	mul(b)

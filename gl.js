@@ -998,8 +998,8 @@ class TextureShader extends Shader
 		var mesh = new Mesh(gl, vbuf, ibuf);
 		
 		//Render a Texture:
-		// - render(Texture, x, y, width, height, depth): at (x, y, depth) with optional width and height (defaults to texture's width and height)
-		// - render(Texture, Matrix4): provide your own transform
+		// - render(Texture, x, y, width, height, depth): at (x, y, depth) with optional width and height (defaults to texture's width and height) (A)
+		// - render(Texture, Matrix4): provide your own transform (B)
 		this.render = function(tex, x = 0, y = 0, w, h, depth = 0)
 		{
 			if(!w) w = tex.getWidth();
@@ -1007,11 +1007,11 @@ class TextureShader extends Shader
 			
 			if(x instanceof Matrix4)
 			{
-				this.setUniformMatrix4(traMatLoc, x);
+				this.setUniformMatrix4(traMatLoc, x); //A
 			}
 			else
 			{
-				__gljs_tmpMat2.setTranslation(__gljs_tmpVec.set(x, y, depth)).mul(__gljs_tmpVec.set(w, h, 1));
+				__gljs_tmpMat2.setTranslation(__gljs_tmpVec.set(x, y, depth)).mul(__gljs_tmpVec.set(w, h, 1)); //B
 				this.setUniformMatrix4(traMatLoc, __gljs_tmpMat2);
 			}
 			
