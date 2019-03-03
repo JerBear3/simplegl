@@ -1,0 +1,235 @@
+<html>
+	<head>
+		<title>simplegl demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<script src="../math.js"></script>
+		<script src="../gl.js"></script>
+	</head>
+	<body onload="main()" style="background-color: #000; margin: 0; overflow: hidden;">
+		<script>
+const CAM_NEAR = 0.1;
+const CAM_FAR = 100;
+const CAM_FOVY = 67 * DEGRAD;
+
+var gl;
+var shaderDefault, shaderSimple, shaderTex;
+var camera3d, camera2d;
+var box, bunnyTri, bunnyLine, logo;
+
+var bunRot = 0;
+var tmpVec = new Vector3(); //creating new vectors that are only used once is very slow and wasteful
+
+async function main()
+{
+	//init webgl
+	canvas = document.createElement("canvas");
+	gl = canvas.getContext("webgl2");
+	gl.enable(gl.DEPTH_TEST);
+	gl.enable(gl.CULL_FACE);
+	gl.enable(gl.BLEND);
+	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+	
+	//point camera at the scene
+	camera3d = new Camera();
+	camera3d.position.set(0, 1.5, 2);
+	camera3d.lookAt(tmpVec.set(0, 0.2, 0));
+	camera2d = new Camera();
+	
+	//shaders do the actual rendering
+	shaderDefault = new DefaultShader(gl);
+	shaderSimple = new SimpleShader(gl);
+	shaderTex = new TextureShader(gl);
+	
+	//set up DOM now that variables used in onresize are defined
+	var bod = document.body;
+	bod.appendChild(canvas);
+	bod.onresize(); //set initial size
+	
+	//add some sunlight
+	var dlight = new DirectionalLight();
+	dlight.direction.set(-1, -0.8, -0.2);
+	shaderDefault.use();
+	shaderDefault.setUniformDirectionalLightEnable(true);
+	shaderDefault.setUniformDirectionalLight(dlight);
+	
+	//build cube model
+	var vbuf = [];
+	var ibuf = new Int32Array(36);
+	var dim = 0.25;
+	
+	vbuf[ 0] = new Vertex(tmpVec.set(-dim, -dim,  dim), VZ,  0, 1); //BL  front
+	vbuf[ 1] = new Vertex(tmpVec.set( dim, -dim,  dim), VZ,  1, 1); //BR
+	vbuf[ 2] = new Vertex(tmpVec.set(-dim,  dim,  dim), VZ,  0, 0); //TL
+	vbuf[ 3] = new Vertex(tmpVec.set( dim,  dim,  dim), VZ,  1, 0); //TR
+	
+	vbuf[ 4] = new Vertex(tmpVec.set(-dim, -dim, -dim), VNZ, 1, 1); //BR  back
+	vbuf[ 5] = new Vertex(tmpVec.set( dim, -dim, -dim), VNZ, 0, 1); //BL
+	vbuf[ 6] = new Vertex(tmpVec.set(-dim,  dim, -dim), VNZ, 1, 0); //TR
+	vbuf[ 7] = new Vertex(tmpVec.set( dim,  dim, -dim), VNZ, 0, 0); //TL
+	
+	vbuf[ 8] = new Vertex(tmpVec.set(-dim, -dim, -dim), VNX, 0, 1); //BL  left
+	vbuf[ 9] = new Vertex(tmpVec.set(-dim, -dim,  dim), VNX, 1, 1); //BR
+	vbuf[10] = new Vertex(tmpVec.set(-dim,  dim, -dim), VNX, 0, 0); //TL
+	vbuf[11] = new Vertex(tmpVec.set(-dim,  dim,  dim), VNX, 1, 0); //TR
+	
+	vbuf[12] = new Vertex(tmpVec.set( dim, -dim, -dim), VX,  1, 1); //BR  right
+	vbuf[13] = new Vertex(tmpVec.set( dim, -dim,  dim), VX,  0, 1); //BL
+	vbuf[14] = new Vertex(tmpVec.set( dim,  dim, -dim), VX,  1, 0); //TR
+	vbuf[15] = new Vertex(tmpVec.set( dim,  dim,  dim), VX,  0, 0); //TL
+	
+	vbuf[16] = new Vertex(tmpVec.set(-dim,  dim,  dim), VY,  0, 1); //BL  top
+	vbuf[17] = new Vertex(tmpVec.set( dim,  dim,  dim), VY,  1, 1); //BR
+	vbuf[18] = new Vertex(tmpVec.set(-dim,  dim, -dim), VY,  0, 0); //TL
+	vbuf[19] = new Vertex(tmpVec.set( dim,  dim, -dim), VY,  1, 0); //TR
+	
+	vbuf[20] = new Vertex(tmpVec.set(-dim, -dim,  dim), VNY, 0, 0); //TL  bottom
+	vbuf[21] = new Vertex(tmpVec.set( dim, -dim,  dim), VNY, 1, 0); //TR
+	vbuf[22] = new Vertex(tmpVec.set(-dim, -dim, -dim), VNY, 0, 1); //BL
+	vbuf[23] = new Vertex(tmpVec.set( dim, -dim, -dim), VNY, 1, 1); //BR
+	
+	ibuf[ 0] = 0;  ibuf[ 1] = 1;  ibuf[ 2] = 2;  //front
+	ibuf[ 3] = 3;  ibuf[ 4] = 2;  ibuf[ 5] = 1;
+	ibuf[ 6] = 6;  ibuf[ 7] = 5;  ibuf[ 8] = 4;  //back
+	ibuf[ 9] = 5;  ibuf[10] = 6;  ibuf[11] = 7;
+	ibuf[12] = 8;  ibuf[13] = 9;  ibuf[14] = 10; //left
+	ibuf[15] = 11; ibuf[16] = 10; ibuf[17] = 9;
+	ibuf[18] = 14; ibuf[19] = 13; ibuf[20] = 12; //right
+	ibuf[21] = 13; ibuf[22] = 14; ibuf[23] = 15;
+	ibuf[24] = 16; ibuf[25] = 17; ibuf[26] = 18; //top
+	ibuf[27] = 19; ibuf[28] = 18; ibuf[29] = 17;
+	ibuf[30] = 22; ibuf[31] = 21; ibuf[32] = 20; //bottom
+	ibuf[33] = 21; ibuf[34] = 22; ibuf[35] = 23;
+	
+	//expand dong
+	var boxMat = new Material();
+	var boxTex = new Texture(gl, "bonzi.png");
+	boxMat.ambientTexture = boxTex;
+	boxMat.ambientTextureEnable = true;
+	boxMat.diffuseTexture = boxTex;
+	boxMat.diffuseTextureEnable = true;
+	
+	box = new Model(new MatMesh(boxMat, new Mesh(gl, vbuf, ibuf)));
+	box.transform.setTranslation(tmpVec.set(0, 0.3, 0)); //raise the box a bit so it's even with the bunnies
+	
+	//2D text
+	logo = new Texture(gl, "webgl.svg");
+	logo.onload = function()
+	{
+		this.loaded = true;
+		this.w = this.getWidth() / 5;
+		this.h = this.getHeight() / 5;
+		logo.x = -logo.w;
+		logo.y = 4;
+	};
+	
+	//download bunny model
+	var response = await fetch("bunny.obj");
+	var obj = await response.text();
+	var lines = obj.split('\n');
+	
+	vbuf = []; //vertices
+	var ibufTri = []; //indices
+	var ibufLine = [];
+	var ni = 0; //normal index
+	
+	//this is a quick dirty hax obj loader and only works on this specific file
+	for(var line of lines)
+	{
+		if(line.startsWith("v ")) //vertices
+		{
+			var linea = line.split(' ');
+			var x = Number(linea[1]);
+			var y = Number(linea[2]);
+			var z = Number(linea[3]);
+			vbuf.push(new Vertex(tmpVec.set(x, y, z).scl(0.3)));
+		}
+		else if(line.startsWith("vn ")) //normals
+		{
+			var linea = line.split(' ');
+			var x = Number(linea[1]);
+			var y = Number(linea[2]);
+			var z = Number(linea[3]);
+			vbuf[ni++].normal.set(x, y, z);
+		}
+		else if(line.startsWith("f ")) //indices (faces)
+		{
+			var linea = line.split(' ');
+			var p1 = parseInt(linea[1]) - 1;
+			var p2 = parseInt(linea[2]) - 1;
+			var p3 = parseInt(linea[3]) - 1;
+			ibufTri.push(p1, p2, p3);
+			ibufLine.push(p1, p2, p3, p1); //connect p3 of the triangle back to p1
+		}
+	}
+	
+	//cute brown buns uwu
+	var bunnyMat = new Material();
+	bunnyMat.ambientColor.set(112 / 255, 82 / 255, 74 / 255);
+	bunnyMat.diffuseColor = bunnyMat.ambientColor;
+	
+	//build models
+	bunnyTri = new Model(new MatMesh(bunnyMat, new Mesh(gl, vbuf, ibufTri)));
+	bunnyLine = new Model(new MatMesh(bunnyMat, new Mesh(gl, vbuf, ibufLine)));
+	
+	//start drawing loop
+	draw();
+}
+
+function draw()
+{
+	gl.clearColor(0, 0, 0, 1);
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	
+	if(logo.loaded) //wait for logo to download
+	{
+		//half a degree per frame @60FPS
+		var deltaRot = getDeltaSpeed(0.5 * DEGRAD);
+		
+		//transformations
+		box.transform.rotate(VY, -deltaRot);
+		bunRot += deltaRot;
+		bunRot %= PI2;
+		bunnyTri.transform.idt().rotate(VY, bunRot + PI).add(VNX).rotate(VY, PIH);
+		bunnyLine.transform.idt().rotate(VY, bunRot).add(VNX).rotate(VY, PIH);
+		logo.x += getDeltaSpeed(4);
+		if(logo.x > canvas.width)
+			logo.x = -logo.w;
+		
+		//render
+		shaderDefault.use();
+		shaderDefault.render(box);
+		shaderDefault.render(bunnyTri);
+		shaderSimple.use();
+		shaderSimple.render(bunnyLine, gl.LINES);
+		shaderTex.use();
+		shaderTex.render(logo, logo.x, logo.y, logo.w, logo.h);
+	}
+	
+	requestAnimationFrame(draw);
+	updateDeltaTime();
+}
+
+document.body.onresize = function()
+{
+	var w = innerWidth;
+	var h = innerHeight;
+	
+	//stretch canvas to fullscreen
+	canvas.width = w;
+	canvas.height = h;
+	
+	gl.viewport(0, 0, w, h); //the portion of the canvas to render in
+	camera3d.projection.setPerspective(CAM_NEAR, CAM_FAR, CAM_FOVY, w / h);
+	camera2d.projection.setOrthographic(0, w, 0, h);
+	
+	//camera doesn't move, so setUniformCamera doesn't have to be called every frame
+	shaderDefault.use();
+	shaderDefault.setUniformCamera(camera3d);
+	shaderSimple.use();
+	shaderSimple.setUniformCamera(camera3d);
+	shaderTex.use();
+	shaderTex.setUniformCamera(camera2d);
+};
+		</script>
+	</body>
+</html>
