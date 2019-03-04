@@ -1005,13 +1005,13 @@ class TextureShader extends Shader
 			if(!w) w = tex.getWidth();
 			if(!h) h = tex.getHeight();
 			
-			if(x instanceof Matrix4)
+			if(x instanceof Matrix4) //A
 			{
-				this.setUniformMatrix4(traMatLoc, x); //A
+				this.setUniformMatrix4(traMatLoc, x);
 			}
-			else
+			else //B
 			{
-				__gljs_tmpMat2.setTranslation(__gljs_tmpVec.set(x, y, depth)).mul(__gljs_tmpVec.set(w, h, 1)); //B
+				__gljs_tmpMat2.setTranslation(__gljs_tmpVec.set(x, y, depth)).mul(__gljs_tmpVec.set(w, h, 1));
 				this.setUniformMatrix4(traMatLoc, __gljs_tmpMat2);
 			}
 			
