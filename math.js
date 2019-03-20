@@ -1,7 +1,7 @@
 //Column-major 4x4 matrix. Values are stored in "val" property
 class Matrix4
 {
-	//Initialize this matrix to b using set(), or leave unset if no args were passed
+	//Initialize this matrix to b using set(), or identity matrix if no args were passed
 	constructor(b)
 	{
 		this.val = new Float32Array(16);
