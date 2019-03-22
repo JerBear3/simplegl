@@ -92,7 +92,7 @@ class Texture
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 			
 			var img = new Image();
-			img.onload = () =>
+			img.onload = (function()
 			{
 				w = img.width;
 				h = img.height;
@@ -104,7 +104,7 @@ class Texture
 				gl.generateMipmap(gl.TEXTURE_2D);
 				
 				if(this.onload) this.onload();
-			};
+			}).bind(this);
 			
 			img.src = data;
 		}
