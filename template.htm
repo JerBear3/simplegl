@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<title>simplegl template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<script src="math.js"></script>
+		<script src="gl.js"></script>
+		<!--<script src="input.js"></script>-->
+	</head>
+	<body onload="main()" style="background-color: #000; margin: 0; overflow: hidden;">
+		<script>
+const CAM_NEAR = 0.1;
+const CAM_FAR = 100;
+const CAM_FOVY = 67 * DEGRAD;
+
+var gl, canvas; //remove canvas if using input.js
+var shaderDefault, shaderTex;
+var camera3d, camera2d;
+
+function main()
+{
+	//Start with input.js (creates a global canvas var for you)
+	//inStateInit();
+	
+	//OR without (create canvas manually)
+	canvas = document.createElement("canvas");
+	
+	gl = canvas.getContext("webgl2");
+	gl.enable(gl.DEPTH_TEST);
+	gl.enable(gl.CULL_FACE);
+	gl.enable(gl.BLEND);
+	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+	
+	camera3d = new Camera();
+	camera2d = new Camera();
+	
+	shaderDefault = new DefaultShader(gl);
+	shaderTex = new TextureShader(gl);
+	
+	var bod = document.body;
+	bod.appendChild(canvas);
+	bod.onresize();
+	
+	var dlight = new DirectionalLight();
+	dlight.direction.set(-1, -0.8, -0.2);
+	shaderDefault.use();
+	shaderDefault.setUniformDirectionalLightEnable(true);
+	shaderDefault.setUniformDirectionalLight(dlight);
+	
+	draw();
+}
+
+function draw()
+{
+	gl.clearColor(0, 0, 0, 1);
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	
+	shaderDefault.use();
+	shaderDefault.setUniformCamera(camera3d);
+	shaderTex.use();
+	
+	//inStateUpdate(); //update input.js
+	requestAnimationFrame(draw);
+	updateDeltaTime();
+}
+
+document.body.onresize = function()
+{
+	var w = innerWidth;
+	var h = innerHeight;
+	
+	canvas.width = w;
+	canvas.height = h;
+	
+	gl.viewport(0, 0, w, h);
+	camera3d.projection.setPerspective(CAM_NEAR, CAM_FAR, CAM_FOVY, w / h);
+	camera2d.projection.setOrthographic(0, w, 0, h);
+	
+	shaderTex.use();
+	shaderTex.setUniformCamera(camera2d);
+};
+		</script>
+	</body>
+</html>
