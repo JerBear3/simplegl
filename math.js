@@ -1,7 +1,7 @@
 //Column-major 4x4 matrix. Values are stored in "val" property
 class Matrix4
 {
-	//Initialize this matrix to b using set(), or identity matrix if no args were passed
+	//Initialize this matrix using set(), or identity matrix if no args were passed
 	constructor(b)
 	{
 		this.val = new Float32Array(16);
@@ -277,14 +277,14 @@ class Matrix4
 //A mathemagical black box used to do 3D rotations
 class Quaternion
 {
-	//Initialize this quaternion to (x, y, z, w), another Quaternion object, or identity quaternion if no args were passed
+	//Initialize this quaternion using set()
 	constructor(x, y, z, w)
 	{
-		this.set(x || 0, y || 0, z || 0, w || 1);
+		this.set(x, y, z, w);
 	}
 	
-	//Set this quaternion to (x, y, z, w) or another Quaternion object
-	set(x, y, z, w)
+	//Set this quaternion to (x, y, z, w), another Quaternion object, or identity quaternion if no args were passed
+	set(x = 0, y = 0, z = 0, w = 1)
 	{
 		if(typeof x === "number")
 		{
@@ -308,7 +308,7 @@ class Quaternion
 	setRotation(axis, rad)
 	{
 		var d = axis.len2();
-		if(d === 0) return this.idt();
+		if(d === 0) return this.set();
 		d = Math.sqrt(d);
 		
 		var ang = rad < 0 ? PI2 - (-rad % PI2) : rad % PI2;
@@ -317,12 +317,6 @@ class Quaternion
 		var dsin = fsin / d;
 		
 		return this.set(axis.x * dsin, axis.y * dsin, axis.z * dsin, fcos).nor();
-	}
-	
-	//Set this quaternion to the identity quaternion
-	idt()
-	{
-		return this.set(0, 0, 0, 1);
 	}
 	
 	//Normalize this quaternion (set its length to 1)
@@ -357,14 +351,14 @@ class Quaternion
 //3D Vector
 class Vector3
 {
-	//Initialize this vector to (x, y, z), another Vector3 object, or (0, 0, 0) if no args were passed
+	//Initialize this vector using set()
 	constructor(x, y, z)
 	{
-		this.set(x || 0, y || 0, z || 0);
+		this.set(x, y, z);
 	}
 	
-	//Set this vector to (x, y, z) or another Vector3 object
-	set(x, y, z)
+	//Set this vector to (x, y, z), another Vector3 object, or (0, 0, 0) if no args were passed
+	set(x = 0, y = 0, z = 0)
 	{
 		if(typeof x === "number")
 		{
@@ -495,7 +489,7 @@ class Vector3
 	}
 }
 
-//Represents an affine transformation (excluding shearing). Useful for Matrix4.transform.set(SimpleTransform)
+//Represents an affine transformation (excluding shearing). Useful for Model.transform.set(SimpleTransform)
 class SimpleTransform
 {
 	//Initialize this transform to st, or no translation/rotation/scaling if no args were passed
@@ -571,14 +565,14 @@ class Plane
 //Color with values ranging from 0-1
 class Color
 {
-	//Initialize this color to (r, g, b, a), another Color object, or opaque black if no args were passed
+	//Initialize this color using set()
 	constructor(r, g, b, a)
 	{
-		this.set(r || 0, g || 0, b || 0, a || 1);
+		this.set(r, g, b, a);
 	}
 	
-	//Set this color to (r, g, b, a) or another Color object. Alpha defaults to 1 (opaque)
-	set(r, g, b, a = 1)
+	//Set this color to (r, g, b, a), another Color object, or opaque black if no args were passed. Alpha defaults to 1 (opaque)
+	set(r = 0, g = 0, b = 0, a = 1)
 	{
 		if(typeof r === "number")
 		{
