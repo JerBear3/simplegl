@@ -180,8 +180,8 @@ async function main()
 			var p1 = parseInt(linea[1]) - 1;
 			var p2 = parseInt(linea[2]) - 1;
 			var p3 = parseInt(linea[3]) - 1;
-			ibufTri.push(p1, p2, p3);
-			ibufLine.push(p1, p2, p3, p1); //connect p3 of the triangle back to p1
+			ibufTri.push(p1, p2, p3); //3 points per triangle
+			ibufLine.push(p1, p2, p2, p3, p3, p1); //3 lines per triangle, 2 points per line
 		}
 	}
 	
