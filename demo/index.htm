@@ -40,6 +40,29 @@ async function main()
 	shaderSimple = new SimpleShader(gl);
 	shaderTex = new TextureShader(gl);
 	
+	//gl viewport and cameras need to be updated when the screen size changes
+	document.body.onresize = function()
+	{
+		var w = innerWidth;
+		var h = innerHeight;
+		
+		//stretch canvas to fullscreen
+		canvas.width = w;
+		canvas.height = h;
+		
+		gl.viewport(0, 0, w, h); //the portion of the canvas to render in
+		camera3d.projection.setPerspective(CAM_NEAR, CAM_FAR, CAM_FOVY, w / h);
+		camera2d.projection.setOrthographic(0, w, 0, h);
+		
+		//camera doesn't move, so setUniformCamera doesn't have to be called every frame
+		shaderDefault.use();
+		shaderDefault.setUniformCamera(camera3d);
+		shaderSimple.use();
+		shaderSimple.setUniformCamera(camera3d);
+		shaderTex.use();
+		shaderTex.setUniformCamera(camera2d);
+	};
+	
 	//set up DOM now that variables used in onresize are defined
 	var bod = document.body;
 	bod.appendChild(canvas);
@@ -208,28 +231,6 @@ function draw()
 	requestAnimationFrame(draw);
 	updateDeltaTime();
 }
-
-document.body.onresize = function()
-{
-	var w = innerWidth;
-	var h = innerHeight;
-	
-	//stretch canvas to fullscreen
-	canvas.width = w;
-	canvas.height = h;
-	
-	gl.viewport(0, 0, w, h); //the portion of the canvas to render in
-	camera3d.projection.setPerspective(CAM_NEAR, CAM_FAR, CAM_FOVY, w / h);
-	camera2d.projection.setOrthographic(0, w, 0, h);
-	
-	//camera doesn't move, so setUniformCamera doesn't have to be called every frame
-	shaderDefault.use();
-	shaderDefault.setUniformCamera(camera3d);
-	shaderSimple.use();
-	shaderSimple.setUniformCamera(camera3d);
-	shaderTex.use();
-	shaderTex.setUniformCamera(camera2d);
-};
 		</script>
 	</body>
 </html>
