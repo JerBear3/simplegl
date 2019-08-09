@@ -40,8 +40,12 @@ async function main()
 	shaderSimple = new SimpleShader(gl);
 	shaderTex = new TextureShader(gl);
 	
+	//set up DOM now that variables used in onresize are defined
+	var bod = document.body;
+	bod.appendChild(canvas);
+	
 	//gl viewport and cameras need to be updated when the screen size changes
-	document.body.onresize = function()
+	bod.onresize = function()
 	{
 		var w = innerWidth;
 		var h = innerHeight;
@@ -63,9 +67,6 @@ async function main()
 		shaderTex.setUniformCamera(camera2d);
 	};
 	
-	//set up DOM now that variables used in onresize are defined
-	var bod = document.body;
-	bod.appendChild(canvas);
 	bod.onresize(); //set initial size
 	
 	//add some sunlight
@@ -145,7 +146,7 @@ async function main()
 		logo.y = 4;
 	};
 	
-	//download bunny model
+	//download bunny model (synchronous downloading is ok for a demo)
 	var response = await fetch("bunny.obj");
 	var obj = await response.text();
 	var lines = obj.split('\n');

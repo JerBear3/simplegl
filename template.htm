@@ -36,7 +36,10 @@ function main()
 	shaderDefault = new DefaultShader(gl);
 	shaderTex = new TextureShader(gl);
 	
-	document.body.onresize = function()
+	var bod = document.body;
+	bod.appendChild(canvas);
+	
+	bod.onresize = function()
 	{
 		var w = innerWidth;
 		var h = innerHeight;
@@ -52,8 +55,6 @@ function main()
 		shaderTex.setUniformCamera(camera2d);
 	};
 	
-	var bod = document.body;
-	bod.appendChild(canvas);
 	bod.onresize();
 	
 	var dlight = new DirectionalLight();
