@@ -40,11 +40,8 @@ async function main()
 	shaderSimple = new SimpleShader(gl);
 	shaderTex = new TextureShader(gl);
 	
-	//set up DOM now that variables used in onresize are defined
-	var bod = document.body;
-	bod.appendChild(canvas);
-	
 	//gl viewport and cameras need to be updated when the screen size changes
+	var bod = document.body;
 	bod.onresize = function()
 	{
 		var w = innerWidth;
@@ -67,6 +64,8 @@ async function main()
 		shaderTex.setUniformCamera(camera2d);
 	};
 	
+	//set up DOM now that variables used in onresize are defined
+	bod.appendChild(canvas);
 	bod.onresize(); //set initial size
 	
 	//add some sunlight
