@@ -896,7 +896,7 @@ class SimpleShader extends Shader
 		var camMatLoc = this.getUniform("camMat");
 		var traMatLoc = this.getUniform("traMat");
 		
-		var matColLoc =   this.getUniform("matCol");
+		var matColLoc   = this.getUniform("matCol");
 		var matTexEnLoc = this.getUniform("matTexEn");
 		this.setUniformInt("matTex", 0);
 		
