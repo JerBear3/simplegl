@@ -651,22 +651,10 @@ class Color
 }
 
 //Matrix4 indices
-const M00 = 0;
-const M01 = 4;
-const M02 = 8;
-const M03 = 12;
-const M10 = 1;
-const M11 = 5;
-const M12 = 9;
-const M13 = 13;
-const M20 = 2;
-const M21 = 6;
-const M22 = 10;
-const M23 = 14;
-const M30 = 3;
-const M31 = 7;
-const M32 = 11;
-const M33 = 15;
+const M00 = 0, M01 = 4, M02 =  8, M03 = 12;
+const M10 = 1, M11 = 5, M12 =  9, M13 = 13;
+const M20 = 2, M21 = 6, M22 = 10, M23 = 14;
+const M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 const MI = new Matrix4();
 
 const V0 = new Vector3(0, 0, 0);

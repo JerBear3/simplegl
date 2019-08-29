@@ -1049,9 +1049,9 @@ function updateDeltaTime()
 }
 
 //Used to smoothly animate at a constant speed, regardless of FPS/delta time
-function getDeltaSpeed(originalSpeed, targetFPS = 60)
+function getDeltaSpeed(originalSpeed, target = targetFPS)
 {
-	return originalSpeed * deltaTime * targetFPS;
+	return originalSpeed * deltaTime * target;
 }
 
 const COLOR_CLEAR   = new Color(0, 0, 0, 0);
@@ -1064,8 +1064,8 @@ const COLOR_CYAN    = new Color(0, 1, 1, 1);
 const COLOR_MAGENTA = new Color(1, 0, 1, 1);
 const COLOR_WHITE   = new Color(1, 1, 1, 1);
 
-//Time in seconds between frames
-var deltaTime = 0;
+var deltaTime = 0; //Time in seconds between frames
+var targetFPS = 60; //Framerate goal
 
 //Do not use
 var __gljs_tmpMat1 = new Matrix4();
