@@ -7,30 +7,29 @@ class Camera
 		this.position = new Vector3();
 		this.direction = new Vector3();
 		this.up = new Vector3(); //AKA tilt
+		this.reset();
 		
 		this.projection = new Matrix4(); //You must set this yourself with setOrthographic or setPerspective on viewport/canvas resize
-		
-		this.lookAt = function(at)
-		{
-			this.direction.set(at).sub(this.position);
-		};
-		
-		//Multiply projection and view matrices together to get the combined camera matrix (for Shader subclasses)
-		this.calculateMatrix = function(out)
-		{
-			__gljs_tmpMat1.setView(this.position, this.direction, this.up);
-			return out.set(this.projection).mul(__gljs_tmpMat1);
-		};
-		
-		//Reset the view matrix to the identity matrix (leaves projection untouched)
-		this.reset = function()
-		{
-			this.position.set(V0);
-			this.direction.set(VNZ);
-			this.up.set(VY);
-		};
-		
-		this.reset();
+	}
+	
+	lookAt(at)
+	{
+		this.direction.set(at).sub(this.position);
+	}
+	
+	//Multiply projection and view matrices together to get the combined camera matrix (for Shader subclasses)
+	calculateMatrix(out)
+	{
+		__gljs_tmpMat1.setView(this.position, this.direction, this.up);
+		return out.set(this.projection).mul(__gljs_tmpMat1);
+	}
+	
+	//Reset the view matrix to the identity matrix (leaves projection untouched)
+	reset()
+	{
+		this.position.set(V0);
+		this.direction.set(VNZ);
+		this.up.set(VY);
 	}
 }
 
