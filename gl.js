@@ -982,10 +982,10 @@ class TextureShader extends Shader
 		var vbuf = [];
 		var ibuf = new Uint32Array(6);
 		
-		vbuf[0] = new Vertex(new Vector3(0, 0, 0));
-		vbuf[1] = new Vertex(new Vector3(1, 0, 0));
-		vbuf[2] = new Vertex(new Vector3(0, 1, 0));
-		vbuf[3] = new Vertex(new Vector3(1, 1, 0));
+		vbuf[0] = new Vertex(V0);
+		vbuf[1] = new Vertex(VX);
+		vbuf[2] = new Vertex(VY);
+		vbuf[3] = new Vertex(__gljs_tmpVec.set(1, 1, 0));
 		
 		ibuf[0] = 0;
 		ibuf[1] = 1;
@@ -1067,7 +1067,7 @@ var deltaTime = 0; //Time in seconds between frames
 var targetFPS = 60; //Framerate goal
 
 //Do not use
-var __gljs_tmpMat1 = new Matrix4();
-var __gljs_tmpMat2 = new Matrix4();
-var __gljs_tmpVec = new Vector3();
+const __gljs_tmpMat1 = new Matrix4();
+const __gljs_tmpMat2 = new Matrix4();
+const __gljs_tmpVec = new Vector3();
 var __gljs_prvTime = 0;
