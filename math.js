@@ -622,6 +622,15 @@ class Color
 		return this;
 	}
 	
+	//Invert this color
+	inv()
+	{
+		this.r = 1 - this.r;
+		this.g = 1 - this.g;
+		this.b = 1 - this.b;
+		return this;
+	}
+	
 	//Return red value converted to Uint8
 	red()
 	{
