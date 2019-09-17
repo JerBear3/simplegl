@@ -655,13 +655,14 @@ class Color
 		return Math.round(this.a * 255);
 	}
 	
-	//Return hex color (#rrggbb)
+	//Return hex color (#rrggbbaa)
 	hex()
 	{
-		var r = this.red().toString(16).padStart(2, '0');
+		var r = this.red  ().toString(16).padStart(2, '0');
 		var g = this.green().toString(16).padStart(2, '0');
-		var b = this.blue().toString(16).padStart(2, '0');
-		return '#' + r + g + b;
+		var b = this.blue ().toString(16).padStart(2, '0');
+		var a = this.alpha().toString(16).padStart(2, '0');
+		return '#' + r + g + b + a;
 	}
 }
 
