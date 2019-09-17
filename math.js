@@ -649,6 +649,12 @@ class Color
 		return Math.round(this.b * 255);
 	}
 	
+	//Return alpha value converted to Uint8
+	alpha()
+	{
+		return Math.round(this.a * 255);
+	}
+	
 	//Return hex color (#rrggbb)
 	hex()
 	{
