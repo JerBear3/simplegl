@@ -963,12 +963,13 @@ class TextureShader extends Shader
 		in vec2 texuv;
 		
 		uniform sampler2D tex;
+		uniform float alpha;
 		
 		out vec4 fragColor;
 		
 		void main()
 		{
-			fragColor = texture(tex, texuv);
+			fragColor = texture(tex, texuv) * vec4(1.f, 1.f, 1.f, alpha);
 		}`;
 		
 		super(gl, vertexShaderSource, fragmentShaderSource);
@@ -977,6 +978,7 @@ class TextureShader extends Shader
 		
 		var camMatLoc = this.getUniform("camMat");
 		var traMatLoc = this.getUniform("traMat");
+		var alphaLoc = this.getUniform("alpha");
 		this.setUniformInt("tex", 2);
 		
 		var vbuf = [];
@@ -997,9 +999,9 @@ class TextureShader extends Shader
 		var mesh = new Mesh(gl, vbuf, ibuf);
 		
 		//Render a Texture:
-		// - render(Texture, x, y, width, height, depth): at (x, y, depth) with optional width and height (defaults to texture's width and height) (A)
-		// - render(Texture, Matrix4): provide your own transform (B)
-		this.render = function(tex, x = 0, y = 0, w, h, depth = 0)
+		// - render(Texture, x, y, width, height, alpha, depth): at (x, y, depth) with optional width and height (defaults to texture's width and height) (A)
+		// - render(Texture, Matrix4, alpha): provide your own transform (B)
+		this.render = function(tex, x = 0, y = 0, w, h, alpha = 1, depth = 0)
 		{
 			if(!w) w = tex.getWidth();
 			if(!h) h = tex.getHeight();
@@ -1007,12 +1009,19 @@ class TextureShader extends Shader
 			if(x instanceof Matrix4) //A
 			{
 				this.setUniformMatrix4(traMatLoc, x);
+				
+				if(!y)
+					alpha = 1;
+				else
+					alpha = y;
 			}
 			else //B
 			{
 				__gljs_tmpMat2.setTranslation(__gljs_tmpVec.set(x, y, depth)).mul(__gljs_tmpVec.set(w, h, 1));
 				this.setUniformMatrix4(traMatLoc, __gljs_tmpMat2);
 			}
+			
+			this.setUniformFloat(alphaLoc, alpha);
 			
 			tex.bind(2);
 			gl.drawElements(gl.TRIANGLES, mesh.getIndexLength(), gl.UNSIGNED_INT, 0);
