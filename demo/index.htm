@@ -77,7 +77,7 @@ async function main()
 	
 	//build cube model
 	var vbuf = [];
-	var ibuf = new Int32Array(36);
+	var ibuf = new Uint32Array(36);
 	var dim = 0.25;
 	
 	vbuf[ 0] = new Vertex(tmpVec.set(-dim, -dim,  dim), VZ,  0, 1); //BL  front
