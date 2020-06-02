@@ -430,7 +430,7 @@ class SpotLight
 	constructor()
 	{
 		this.position  = new Vector3();
-		this.direction = new Vector3();
+		this.direction = new Vector3(VNZ);
 		this.ambient   = new Vector3(0.3, 0.3, 0.3);
 		this.diffuse   = new Vector3(V1);
 		this.specular  = new Vector3(0.5, 0.5, 0.5);
